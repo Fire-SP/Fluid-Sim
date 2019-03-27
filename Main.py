@@ -89,7 +89,7 @@ def render():
             heightcolor = int(heightmap[j][i]*3)
             if aircolor > 255:
                 aircolor=255
-            pygame.draw.rect(screen,(heightcolor,heightcolor,aircolor),(j*size,i*size,size,size))
+            pygame.draw.circle(screen,(heightcolor,heightcolor,aircolor),(j*size,i*size),size)
 
             
             
