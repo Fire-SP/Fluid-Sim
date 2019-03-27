@@ -1,7 +1,7 @@
 # air on higher value squares will try to flow to lower value squares
 # a square can only hold a certain amount of air ( Depends on square value ). If square is full, air will not flow into it.
 
-import random, pygame, time
+import random, pygame, time, sys
 from noise import pnoise2
 noise_X = random.randint(-1000,1000)
 noise_Y = random.randint(-1000,1000)
