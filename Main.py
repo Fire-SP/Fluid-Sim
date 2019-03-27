@@ -5,7 +5,7 @@ import random, pygame, time
 from noise import pnoise2
 noise_X = random.randint(-1000,1000)
 noise_Y = random.randint(-1000,1000)
-#Modifiers. Chage these to chage window size, zoom, and particle size
+#Modifiers. Change these to change window size, zoom, and particle size
 noise_zoom = 0.05
 mapsize = 150
 size = 7
@@ -73,10 +73,16 @@ def generate_map():
             height += 15
             heightmap[i].append(abs(height))
             air[i].append(random.randint(0,5))
+            
+def key_press(): # Added by u/ delijati. Thank you!
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_c and pygame.key.get_mods() and pygame.KMOD_CTRL:
+                print("pressed CTRL-C as an event")
+                sys.exit(0)
 
             
 def render():
-    
     for i in range(mapsize):
         for j in range(mapsize):
             aircolor = air[j][i]*25
@@ -91,5 +97,6 @@ generate_map()
 while True:
     update_air()
     render()
+    key_press()
     pygame.display.flip()
     
