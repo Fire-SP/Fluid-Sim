@@ -7,7 +7,7 @@ global density
 noise_X = random.randint(-10000,10000)
 noise_Y = random.randint(-10000,10000)
 noise_zoom = 0.05
-mapsize = 100
+mapsize = 75
 size = 10
 density = 4
 
@@ -25,10 +25,10 @@ def update_air_index(i,j):
         d1 = [255,255,255,255]
         
     else:
-        d1 = [heightmap[i][j-1]+air[i][j-1], heightmap[i][j+1]+air[i][j+1], heightmap[i-1][j]+air[i-1][j], heightmap[i+1][j]+air[i+1][j],heightmap[i-1][j-1]+air[i+1][j],
-              heightmap[i+1][j-1]+air[i-1][j-1],heightmap[i-1][j+1]+air[i+1][j-1],heightmap[i+1][j+1]+air[i-1][j+1],heightmap[i][j]+air[i+1][j+1]]
+        d1 = [heightmap[i][j-1]+air[i][j-1], heightmap[i][j+1]+air[i][j+1], heightmap[i-1][j]+air[i-1][j], heightmap[i+1][j]+air[i+1][j],
+              heightmap[i-1][j-1]+air[i-1][j-1],heightmap[i+1][j-1]+air[i+1][j-1],heightmap[i-1][j+1]+air[i-1][j+1],heightmap[i+1][j+1]+air[i+1][j+1]]
         
-        if random.randint(0,3) == 0:
+        if random.randint(0,4):
             random.shuffle(d1)
         target = min(d1)
         target_location = d1.index(min(d1))
@@ -37,7 +37,7 @@ def update_air_index(i,j):
         
         old_air = air[i][j]
         if air[i][j] >= 1:
-            if heightmap[i][j] >= target:
+            if heightmap[i][j] >= target_location:
                 if air[i-1][j] <= density: 
                     if target_location == 2:
                         air[i][j] -= 1
