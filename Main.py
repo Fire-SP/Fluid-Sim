@@ -7,7 +7,7 @@ global density
 noise_X = random.randint(-10000,10000)
 noise_Y = random.randint(-10000,10000)
 noise_zoom = 0.05
-mapsize = 75
+mapsize = 100
 size = 10
 density = 4
 
@@ -20,7 +20,6 @@ air = []
 heightmap = []
 
 def update_air_index(i,j):
-    global run_tick
     if i == 0 or i == (mapsize-1) or j == 0 or j == (mapsize-1):
         d1 = [255,255,255,255]
         
@@ -28,107 +27,91 @@ def update_air_index(i,j):
         d1 = [heightmap[i][j-1]+air[i][j-1], heightmap[i][j+1]+air[i][j+1], heightmap[i-1][j]+air[i-1][j], heightmap[i+1][j]+air[i+1][j],
               heightmap[i-1][j-1]+air[i-1][j-1],heightmap[i+1][j-1]+air[i+1][j-1],heightmap[i-1][j+1]+air[i-1][j+1],heightmap[i+1][j+1]+air[i+1][j+1]]
         
-        if random.randint(0,4):
-            random.shuffle(d1)
-        target = min(d1)
         target_location = d1.index(min(d1))
-        
-            
-        
         old_air = air[i][j]
-        if air[i][j] >= 1:
-            if heightmap[i][j] >= target_location:
-                if air[i-1][j] <= density: 
-                    if target_location == 2:
-                        air[i][j] -= 1
-                        air[i-1][j] += 1
+        if heightmap[i][j] >= target_location and air[i][j] != 0:
+            if target_location == 0:
+                air[i][j] -= air[i][j]/2
+                air[i][j-1] += air[i][j]
 
-                if air[i+1][j] <= density:
-                    if target_location == 3:
-                        air[i][j] -= 1
-                        air[i+1][j] += 1
-                        
-                if air[i][j-1] <= density:
-                    if target_location == 0:
-                        air[i][j] -= 1
-                        air[i][j-1] += 1
+            if target_location == 1:
+                air[i][j] -= air[i][j]/2
+                air[i][j+1] += air[i][j]
 
-                if air[i][j+1] <= density:
-                    if target_location == 1:
-                        air[i][j] -= 1
-                        air[i][j+1] += 1
-                        
-                if air[i-1][j-1] <= density: 
-                    if target_location == 4:
-                        air[i][j] -= 1
-                        air[i-1][j-1] += 1
-                        
-                if air[i+1][j-1] <= density: 
-                    if target_location == 5:
-                        air[i][j] -= 1
-                        air[i+1][j-1] += 1
+            if target_location == 2:
+                air[i][j] -= air[i][j]/2
+                air[i-1][j] += air[i][j]
+
+            if target_location == 3:
+                air[i][j] -= air[i][j]/2
+                air[i+1][j] += air[i][j]
                 
-                if air[i-1][j+1] <= density: 
-                    if target_location == 6:
-                        air[i][j] -= 1
-                        air[i-1][j+1] += 1
-                        
-                if air[i+1][j+1] <= density: 
-                    if target_location == 7:
-                        air[i][j] -= 1
-                        air[i+1][j+1] += 1
-
-            if old_air == air[i][j] and random.randint(0,3) == 0:
-                a1 = [air[i][j-1], air[i][j+1], air[i-1][j], air[i+1][j],air[i-1][j-1],air[i+1][j-1],air[i-1][j+1],air[i+1][j+1]]
+            if target_location == 4:
+                air[i][j] -= air[i][j]/2
+                air[i-1][j-1] += air[i][j]
                 
-                random.shuffle(a1)
-                target2 = min(a1)
-                target_location2 = a1.index(min(a1))
+            if target_location == 5:
+                air[i][j] -= air[i][j]/2
+                air[i+1][j-1] += air[i][j]
+         
+            if target_location == 6:
+                air[i][j] -= air[i][j]/2
+                air[i-1][j+1] += air[i][j]
+                 
+            if target_location == 7:
+                air[i][j] -= air[i][j]/2
+                air[i+1][j+1] += air[i][j]
+
+        if old_air == air[i][j]:
+            a1 = [air[i][j-1], air[i][j+1], air[i-1][j], air[i+1][j],air[i-1][j-1],air[i+1][j-1],air[i-1][j+1],air[i+1][j+1]]
+            
+            target_location2 = a1.index(min(a1))
+            random.shuffle(a1)
+            
+            
+            if air[i][j-1] <= air[i][j]:
+                if target_location2 == 0:
+                    air[i][j] -= air[i][j]/2
+                    air[i][j-1] += air[i][j]
+
+            if air[i][j+1] <= air[i][j]:
+                if target_location2 == 1:
+                    air[i][j] -= air[i][j]/2
+                    air[i][j+1] += air[i][j]
+
+            if air[i-1][j] <= air[i][j]: 
+                if target_location2 == 2:
+                    air[i][j] -= air[i][j]/2
+                    air[i-1][j] += air[i][j]
+
+            if air[i+1][j] <= air[i][j]:
+                if target_location2 == 3:
+                    air[i][j] -= air[i][j]/2
+                    air[i+1][j] += air[i][j]
+
+            if air[i-1][j-1] <= air[i][j]: 
+                if target_location2 == 4:
+                    air[i][j] -= air[i][j]/2
+                    air[i-1][j-1] += air[i][j]
                 
-                if air[i][j-1] <= air[i][j]:
-                    if target_location2 == 0:
-                        air[i][j] -= 1
-                        air[i][j-1] += 1
-
-                if air[i][j+1] <= air[i][j]:
-                    if target_location2 == 1:
-                        air[i][j] -= 1
-                        air[i][j+1] += 1
-
-                if air[i-1][j] <= air[i][j]: 
-                    if target_location2 == 2:
-                        air[i][j] -= 1
-                        air[i-1][j] += 1
-
-                if air[i+1][j] <= air[i][j]:
-                    if target_location2 == 3:
-                        air[i][j] -= 1
-                        air[i+1][j] += 1
-
-                if air[i-1][j-1] <= air[i][j]: 
-                    if target_location2 == 4:
-                        air[i][j] -= 1
-                        air[i-1][j-1] += 1
+            if air[i+1][j-1] <= air[i][j]: 
+                if target_location2 == 5:
+                    air[i][j] -= air[i][j]/2
+                    air[i+1][j-1] += air[i][j]
+            
+            if air[i-1][j+1] <= air[i][j]: 
+                if target_location2 == 6:
+                    air[i][j] -= air[i][j]/2
+                    air[i-1][j+1] += air[i][j]
                     
-                if air[i+1][j-1] <= air[i][j]: 
-                    if target_location2 == 5:
-                        air[i][j] -= 1
-                        air[i+1][j-1] += 1
-                
-                if air[i-1][j+1] <= air[i][j]: 
-                    if target_location2 == 6:
-                        air[i][j] -= 1
-                        air[i-1][j+1] += 1
-                        
-                if air[i+1][j+1] <= air[i][j]: 
-                    if target_location2 == 7:
-                        air[i][j] -= 1
-                        air[i+1][j+1] += 1
+            if air[i+1][j+1] <= air[i][j]: 
+                if target_location2 == 7:
+                    air[i][j] -= air[i][j]/2
+                    air[i+1][j+1] += air[i][j]
 
                 
 def update_air():
-    i_list = [ i for i in range(mapsize)]
-    j_list = [ i for i in range(mapsize)]
+    global i_list, j_list
     random.shuffle(i_list)
     random.shuffle(j_list)
     for i in i_list:
@@ -137,16 +120,19 @@ def update_air():
         
 
 def generate_map():
+    global i_list,j_list
     for i in range(mapsize+1):
         air.append([])
         heightmap.append([])
         for j in range(mapsize+1):
-            height = pnoise2((i + (noise_X*5))*noise_zoom, (j + (noise_Y))*noise_zoom)*30
+            height = pnoise2((i + (noise_X*5))*noise_zoom, (j + (noise_Y))*noise_zoom)*120
             height += 15 + (random.randint(0,2500)/10000)
             if height < 0:
                 height = 0
             heightmap[i].append(abs(height))
-            air[i].append(2)
+            air[i].append(3)
+    i_list = [ i for i in range(mapsize)]
+    j_list = [ i for i in range(mapsize)]
             
 def key_press(): # Added by u/ delijati. Thank you!
     raw_mouse = pygame.mouse.get_pos()
@@ -173,7 +159,7 @@ def render():
     for i in range(mapsize):
         for j in range(mapsize):
             aircolor = air[j][i]*25
-            heightcolor = int(heightmap[j][i]*2)
+            heightcolor = (heightmap[j][i])
             if int(heightcolor) > 255:
                 heightcolor = 255
             if aircolor > 255:
