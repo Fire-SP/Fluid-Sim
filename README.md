@@ -13,4 +13,4 @@ Ground "dryness" level that changes visuals
 
 Erosion based on sediment and rock hardness systems
 
-is on a 75x75 grid and run around 25 fps. 
+is on a 75x75 grid and runs around 25 fps. 
