@@ -1,7 +1,7 @@
 # Fluid-Sim
 Simple Air/ water sim
 
-Current build ( 0.3.2 ) has..
+Current build ( 0.3.3 ) has..
 
 Digging and creation of terrain
 
