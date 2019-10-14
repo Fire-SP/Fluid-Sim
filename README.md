@@ -1,7 +1,7 @@
 # Fluid-Sim
 Simple Air/ water sim
 
-Current build ( 0.3.5 ) has..
+Current build ( 0.3.6 ) has..
 
 Digging and creation of terrain
 
@@ -11,8 +11,10 @@ Temperature system
 
 Togglable weather cycle
 
-Ground "dryness" level that changes visuals
+Ground "dryness" level that changes visuals 
 
 Erosion based on sediment and rock hardness systems
 
-is on a 75x75 grid and runs around 25 fps. 
+New Rendering system
+
+35 fps average.
